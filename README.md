@@ -1,7 +1,7 @@
 ![active development](https://img.shields.io/badge/active%20dev-yes-brightgreen.svg)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Devansh015/cs-webring.svg)
 
-# 🔗 CS Webring
+# 🔗 CS Webring - WIP
 <img alt="cs-webring icon" src="./assets/logo/logo_bg.svg" width="100" height="100">
 
 💻 A webring for Computer Science (CS) students at our university.
