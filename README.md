@@ -113,13 +113,6 @@ Choose from 5 built-in themes:
 
 ---
 
-## Credits 
-
-* Inspired by [SE Webring](https://se-webring.xyz/) by Simran Thind and Janakitti Ratana-Rueangsri.
-* Fuzzy search powered by [Fuse.js](https://fusejs.io/).
-* 3D animations with [Three.js](https://threejs.org/).
-* Built with [React](https://react.dev/) + [Vite](https://vite.dev/).
-
 ---
 
 **Authors:** Devansh Jain, Yash Soni
