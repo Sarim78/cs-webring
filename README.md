@@ -84,16 +84,6 @@ vercel-deploy           # Deploy to production
 
 ---
 
-Add this snippet anywhere on your website:
-
-```html
-<div id="cs-webring"></div>
-<link rel="stylesheet" href="https://cs-webring.vercel.app/widget/themes.css">
-<script src="https://cs-webring.vercel.app/widget/webring.js"></script>
-```
-
-The widget auto-detects your site and displays **← Prev | Home | Random | Next →** navigation.
-
 ### Widget Themes
 
 Choose from 5 built-in themes:
