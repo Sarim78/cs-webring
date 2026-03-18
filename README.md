@@ -27,12 +27,9 @@ A webring is a group of websites linked together in a circular manner, centered 
 
 ```json
 {
-  "id": "your-name",
   "name": "Your Name",
   "url": "https://yoursite.com",
-  "description": "Short description of your site",
-  "owner": "Your Name",
-  "added": "2026-02-03"
+  "cohort": "2027"
 }
 ```
 
