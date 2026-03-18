@@ -23,7 +23,7 @@ A webring is a group of websites linked together in a circular manner, centered 
 ### Step 1: Submit a Pull Request
 
 1. Fork this repository
-2. Add your site to `data/webring.json`:
+2. Add your site to `data/members.json`:
 
 ```json
 {
@@ -64,12 +64,14 @@ See [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md) for complete deployment instr
 ```bash
 # Terminal 1: Backend API
 cd backend
-node index.js
+npm run dev
 
 # Terminal 2: Frontend
 cd frontend
 npm run dev
 ```
+
+Set `PORT=3001` in `backend/.env` for local development so the join flow matches the frontend's local API target.
 
 For convenience, use the included deployment commands:
 ```bash
