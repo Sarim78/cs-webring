@@ -49,22 +49,7 @@ export default function Scene() {
     if (!introDismissed && p > 0.06) setIntroDismissed(true);
   }, [p, introDismissed]);
 
-  // NEW: prevent scrolling until arrow is clicked
-  useEffect(() => {
-    if (arrowClicked) return;
-
-    const preventScroll = (e: WheelEvent | TouchEvent) => {
-      e.preventDefault();
-    };
-
-    window.addEventListener("wheel", preventScroll, { passive: false });
-    window.addEventListener("touchmove", preventScroll, { passive: false });
-
-    return () => {
-      window.removeEventListener("wheel", preventScroll);
-      window.removeEventListener("touchmove", preventScroll);
-    };
-  }, [arrowClicked]);
+  // Scrolling is always enabled; removed scroll prevention effect.
 
   useEffect(() => {
     const el = sceneRef.current;
