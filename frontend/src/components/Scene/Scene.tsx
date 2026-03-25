@@ -13,9 +13,6 @@ export default function Scene() {
   const autoScrollCancelRef = useRef(false);
   const introTaglines = ["Building a Community", "Join the Ring"];
 
-  // NEW: track if arrow has been clicked
-  const [arrowClicked, setArrowClicked] = useState(false);
-
   // Scatter happens early
   const scatterAmount = clamp01(remap(p, 0.0, 0.28));
 
@@ -138,7 +135,6 @@ export default function Scene() {
   const showArrow = p < 0.08 && !ballsFinished;
 
   const onArrowClick = () => {
-    setArrowClicked(true); // unlock scrolling
     const el = sceneRef.current;
     if (!el) return;
 
