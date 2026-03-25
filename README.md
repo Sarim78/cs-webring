@@ -22,6 +22,8 @@ Add your entry to the members array using this format:
 3. Submit a PR and we'll try to review it as fast as possible!
 
 ## Widget
+<img width="302" height="160" alt="image" src="https://github.com/user-attachments/assets/9363e6a4-6eec-4bae-87a0-7f4ca883aa90" />
+
 
 #### HTML:
 
