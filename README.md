@@ -77,7 +77,7 @@ This project brings that idea to CS students and alumni by giving everyone a sim
 #### _I'm not in CS. Can I still join?_
 
 > We’re really glad you’re interested in the webring. If you’re a Laurier student outside of CS, there may be a better fit depending on your program,
-> Students in Data Science or other closely related computing programs are still welcome to reach out or submit a PR, and we can review those on a case-by-case basis.
+> students in Data Science or other closely related computing programs are still welcome to reach out or submit a PR, and we can review those on a case-by-case basis.
 >
 
 #### _Do you accept alumni and post-grad students?_
