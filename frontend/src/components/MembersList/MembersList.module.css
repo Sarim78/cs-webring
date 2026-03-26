@@ -80,17 +80,31 @@
 @media (max-width: 800px) {
   .wrap {
     width: 90vw;
+    padding-top: 4vh;
   }
   .grid {
-    gap: 36px 24px;
+    gap: 32px 24px;
+  }
+  .item {
+    text-align: center;
   }
 }
 
 @media (max-width: 500px) {
+  .wrap {
+    width: 92vw;
+    padding-top: 3vh;
+  }
   .grid {
-    gap: 28px 16px;
+    gap: 24px 16px;
+    justify-content: center;
   }
   .item {
     min-width: 100px;
+    text-align: center;
+    font-size: 13.5px;
+  }
+  .search {
+    font-size: 14px;
   }
 }

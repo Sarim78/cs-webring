@@ -210,6 +210,39 @@
   transform: scale(1.05);
 }
 
+@media (max-width: 768px) {
+  .titleOverlay h1 {
+    font-size: clamp(2.8rem, 14vw, 5rem);
+  }
+
+  .taglineCycler {
+    width: min(92vw, 28rem);
+    min-height: 1.8rem;
+    margin-top: 0.5rem;
+  }
+
+  .taglineItem {
+    font-size: clamp(0.85rem, 3vw, 1.15rem);
+    letter-spacing: 0.18em;
+  }
+
+  .downArrow {
+    width: 44px;
+    height: 44px;
+    bottom: 24px;
+  }
+
+  .topLeftLogo {
+    top: 12px;
+    left: 12px;
+  }
+
+  .topLeftLogo img {
+    width: clamp(48px, 12vw, 72px);
+    height: clamp(48px, 12vw, 72px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .taglineCycler {
     min-height: auto;

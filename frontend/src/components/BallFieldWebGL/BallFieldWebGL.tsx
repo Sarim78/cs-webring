@@ -36,20 +36,23 @@ export default function BallFieldWebGL({ scatterAmount }: { scatterAmount: numbe
     const host = hostRef.current;
     if (!host) return;
 
+    // Mobile detection for performance scaling
+    const isMobile = window.innerWidth < 768;
+
     // Scene
     const scene = new THREE.Scene();
 
-    // Camera
+    // Camera — pull back slightly on mobile portrait so cluster fits
     const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 300);
-    camera.position.set(0, 0, 16);
+    camera.position.set(0, 0, isMobile ? 19 : 16);
 
     // Renderer
     const renderer = new THREE.WebGLRenderer({
-      antialias: true,
+      antialias: !isMobile,
       alpha: true,
-      powerPreference: "high-performance",
+      powerPreference: isMobile ? "default" : "high-performance",
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2));
     // @ts-ignore
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.setClearAlpha(0);
@@ -78,8 +81,9 @@ export default function BallFieldWebGL({ scatterAmount }: { scatterAmount: numbe
     rimLight.position.set(0, 3, -8);
     scene.add(rimLight);
 
-    // Geometry + Materials — higher poly, slightly more reflective
-    const geometry = new THREE.SphereGeometry(1, 32, 24);
+    // Geometry — lower poly on mobile for performance
+    const segments = isMobile ? [20, 16] : [32, 24];
+    const geometry = new THREE.SphereGeometry(1, segments[0], segments[1]);
 
     const purpleMat = new THREE.MeshStandardMaterial({
       color: new THREE.Color("#4B2E83"),
@@ -93,8 +97,8 @@ export default function BallFieldWebGL({ scatterAmount }: { scatterAmount: numbe
       metalness: 0.12,
     });
 
-    // Instances
-    const COUNT = 46;
+    // Instances — fewer balls on mobile
+    const COUNT = isMobile ? 28 : 46;
     const goldCount = Math.floor(COUNT / 3);
     const purpleCount = COUNT - goldCount;
 
@@ -110,12 +114,12 @@ export default function BallFieldWebGL({ scatterAmount }: { scatterAmount: numbe
     // Physics tuning — smoother feel
     const CENTER = new THREE.Vector3(0, 0, 0);
 
-    const CLUSTER_RADIUS = 5.2;
+    const CLUSTER_RADIUS = isMobile ? 4.2 : 5.2;
     const GRAVITY = 0.18;
     const DRAG_CLUSTER = 0.98;
 
     const RESTITUTION = 0.65;
-    const COLLISION_PASSES = 2;
+    const COLLISION_PASSES = isMobile ? 1 : 2;
 
     const OUTWARD_FORCE = 6.5;
     const DRAG_SCATTER = 0.997;
@@ -152,6 +156,18 @@ export default function BallFieldWebGL({ scatterAmount }: { scatterAmount: numbe
 
     const lastHandPos = new THREE.Vector3(999, 999, 0);
 
+    // Touch support for mobile — treat touch as pointer
+    const onTouchMove = (ev: TouchEvent) => {
+      if (ev.touches.length > 0) {
+        updateHandFromClientXY(ev.touches[0].clientX, ev.touches[0].clientY);
+      }
+    };
+    const onTouchEnd = () => {
+      handActive.value = false;
+      handPos.set(999, 999, 0);
+      lastHandPos.set(999, 999, 0);
+    };
+
     const updateHandFromClientXY = (clientX: number, clientY: number) => {
       const rect = host.getBoundingClientRect();
       if (rect.width <= 1 || rect.height <= 1) return;
@@ -186,6 +202,8 @@ export default function BallFieldWebGL({ scatterAmount }: { scatterAmount: numbe
     };
 
     window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
     window.addEventListener("scroll", onScroll, { passive: true });
 
     // Balls
@@ -268,6 +286,12 @@ export default function BallFieldWebGL({ scatterAmount }: { scatterAmount: numbe
       const height = Math.max(1, rect.height);
       renderer.setSize(width, height, true);
       camera.aspect = width / height;
+      // On narrow/portrait viewports, pull camera back so the cluster stays fully visible
+      if (camera.aspect < 1) {
+        camera.position.z = 16 + (1 - camera.aspect) * 8;
+      } else {
+        camera.position.z = isMobile ? 19 : 16;
+      }
       camera.updateProjectionMatrix();
     };
     resize();
@@ -319,7 +343,6 @@ export default function BallFieldWebGL({ scatterAmount }: { scatterAmount: numbe
 
     const applyHandForces = (dtSec: number) => {
       if (!handActive.value) {
-        smoothHandSpeed = 0;
         smoothHandSpeed = 0;
         lastHandPos.set(999, 999, 0);
         return;
@@ -500,6 +523,8 @@ export default function BallFieldWebGL({ scatterAmount }: { scatterAmount: numbe
     return () => {
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
       window.removeEventListener("scroll", onScroll);
 
       if (raf) cancelAnimationFrame(raf);
